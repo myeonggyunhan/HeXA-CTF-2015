@@ -1,0 +1,7 @@
+* from d where ball ='d' union select
+* from r where ball ='r' union select
+* from a where ball ='a' union select
+* from g where ball ='g' union select
+* from o where ball ='o' union select
+* from n where ball ='n' union select
+* from b where ball ='b' 

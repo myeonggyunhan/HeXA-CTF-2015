@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+  <script>
+  $(document)
+    .ready(function() {
+      $('select.dropdown')
+          .dropdown()
+      ;
+    })
+  ;
+  </script>
+
+<div class="ui main container">
+    <div class="ui segments">
+      <div class="ui segment">
+        <i class="blue big edit icon"></i> <b style="font-size: 1.2em;">Edit Notice</b>
+      </div>
+
+      <div class="ui segment">
+        <form class="ui form" action="/dashboard/edit_notice/{{notice_entry.id}}/" method="post">{% csrf_token %}
+          <div class="field">
+            <label>Notice title</label>
+            <input type="text" id="notice_title" name="notice_title" value="{{notice_entry.title}}">
+          </div>
+
+          <div class="field">
+            <label>Notice description</label>
+            <textarea id="notice_description" name="notice_description">{{notice_entry.description}}</textarea>
+          </div>
+          <button class="ui right floated blue button" type="submit">Submit</button>
+          <br><br>
+        </form>
+      </div>
+
+    </div>
+</div>
+
+{% endblock %}

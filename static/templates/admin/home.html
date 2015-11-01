@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <script>
+  $(document)
+    .ready(function() {
+      $('.ui.menu a.item')
+          .tab()
+      ;
+      $('select.dropdown')
+          .dropdown()
+      ;
+      $('.ui.accordion')
+          .accordion()
+      ;
+    })
+  ;
+  </script>
+
+  <div class="ui main container">
+  {% include "message.html" %}
+    <div class="ui attached segment">
+      <div class="ui secondary pointing menu">
+        <a class="active item" data-tab="first">Problem List</a>
+        <a class="item" data-tab="second">Notice List</a>
+        <a class="item" data-tab="third">Create Problem</a>
+        <a class="item" data-tab="fourth">Create Notice</a>
+        <a class="item" data-tab="fifth">Log</a>
+      </div>
+
+      <!-- First tab, Problem list -->
+      <div class="ui tab active" data-tab="first">
+        <div class="ui styled fluid accordion">
+          {% for entry in problem_entries %}
+          <div class="title">
+              <div class="ui {{entry.category.color}} horizontal label">
+                {{entry.category.title}}
+              </div>
+              <b>{{entry.title}} (point: {{entry.point}})</b>
+              <a href="/dashboard/delete_problem/{{entry.id}}/"><i class="large link black remove icon" style="float: right"></i></a>
+              <a href="/dashboard/edit_problem/{{entry.id}}/"><i class="large link black edit icon" style="float: right"></i></a>
+          </div>
+          <div class="content">
+            {% autoescape off %}
+            <p>{{entry.description|linebreaksbr}}</p>
+            {% endautoescape %}
+            {% if entry.problem_file %}
+            <a href="/gameboard/download/{{entry.id}}">Download Attachment</a>
+            {% endif %}
+            
+            {% if entry.solver_count > 0 %}
+            <h4 class="ui horizontal divider header">Solver list</h4>
+            <p>
+            {% for solver in solver_list %}
+              {% if solver.problem_id == entry.id %}
+                {{solver.username}} ,  
+              {% endif %}
+            {% endfor %}   
+            {% endif %}
+            </p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Second tab, Notice list -->
+      <div class="ui tab" data-tab="second">
+        <div class="ui styled fluid accordion">
+          {% for entry in notice_entries %}
+          <div class="title">
+            <i class="dropdown icon"></i>
+            <b>{{entry.title}}</b>
+            <a href="/dashboard/delete_notice/{{entry.id}}/"><i class="large link black remove icon" style="float: right"></i></a>
+            <a href="/dashboard/edit_notice/{{entry.id}}/"><i class="large link black edit icon" style="float: right"></i></a>
+          </div>
+          <div class="content">
+            {% autoescape off %}
+            <p>{{entry.description|linebreaksbr}}</p>
+            {% endautoescape %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Third tab, Create Problem -->
+      <div class="ui tab" data-tab="third">
+        <br>
+        <form class="ui form" action="/dashboard/add_problem/" enctype="multipart/form-data" method="post">{% csrf_token %}
+          <div class="field">
+            <label>Problem title</label>
+            <input type="text" id="title" name="title" placeholder="Please input problem title here.">
+          </div>
+        
+          <div class="field">
+            <label>Problem settings</label>
+            <div class="fields">
+              <div class="ten wide field">
+                <input type="text" id="answer" name="answer" placeholder="Answer">
+              </div>
+              <div class="six wide field">
+                <input type="text" id="point" name="point" placeholder="Point">
+              </div>
+            </div>
+            <select id="category" name="category" class="ui dropdown">
+               <option value="">Select Category</option>
+               {% for category in categories %}
+               <option value="{{category.title}}">{{category.title}}</option>
+               {% endfor %}
+            </select>
+          </div>
+        
+          <div class="field">
+            <label>Problem description</label>
+            <textarea id="description" name="description"></textarea>
+          </div>
+          <input type="file" id="problem_file" name="problem_file">
+          <button class="ui right floated blue button" type="submit">Submit</button>
+          <br><br>
+        </form>
+      </div>
+
+      <!-- Fourth tab, Create Notice -->
+      <div class="ui tab" data-tab="fourth">
+        <br>
+        <form class="ui form" action="/dashboard/add_notice/" method="post">{% csrf_token %}
+          <div class="field">
+            <label>Notice title</label>
+            <input type="text" id="notice_title" name="notice_title">
+          </div>
+
+          <div class="field">
+            <label>Notice description</label>
+            <textarea id="notice_description" name="notice_description"></textarea>
+          </div>
+          <button class="ui right floated blue button" type="submit">Submit</button>
+          <br><br>
+        </form>
+      </div>
+
+      <!-- Fifth tab, User Log -->
+      <div class="ui tab" data-tab="fifth">
+
+
+        <table class="ui single line table">
+          <thead>
+          <tr>
+            <th class="three wide center aligned">Time</th>
+            <th class="three wide center aligned">Username</th>
+            <th class="ten wide center aligned">Description</th>
+          </tr>
+          </thead>
+
+          <tbody>
+            {% for log_entry in log_entries %}
+            {% if 'success' in log_entry.description %}
+            <tr class="positive">
+            {% elif 'failed' in log_entry.description %}
+            <tr class="negative">
+            {% else %}
+            <tr> 
+            {% endif %}
+              <td class="center aligned">{{ log_entry.time|date:"Y-m-d H:i:s" }}</td>
+              <td class="center aligned">{{ log_entry.account.user.username }}</td>
+              <td class="center aligned">{{ log_entry.description }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+
+      </div>
+    </div><!-- ui segment for TAB end -->
+  </div>
+
+{% endblock %}

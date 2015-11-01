@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="ui main container">
+    <div class="ui segments">
+      <div class="ui segment">
+        <i class="blue big info icon"></i> <b style="font-size: 1.2em;">HeXA CTF Notice</b>
+      </div>
+
+      <div class="ui segment"><br>
+      {% for entry in entries %}
+        <div class="ui centered grid">
+          <div class="sixteen wide mobile ten wide computer column">
+            <div class="ui secondary raised very padded segment">
+              {% autoescape off %}
+              <div class="ui huge center aligned header">{{entry.title}}</div>
+              <br>
+              <p>{{entry.description|linebreaksbr}}</p>
+              {% endautoescape %}
+            </div>
+          </div><br>
+        </div><br><br>
+      {% empty %}
+        <div class="ui secondary raised center aligned segment">
+          <br><br>
+          <i class="disabled warning circle massive icon"></i>
+          <h3>There are no Notice!</h3>
+          <br><br>
+        </div>
+      {% endfor %}
+      </div>
+
+    </div>
+</div>
+
+{% endblock %}

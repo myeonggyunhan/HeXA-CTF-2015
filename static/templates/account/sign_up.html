@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block content %}
+  <style type="text/css">
+    body > .grid {
+      height: 100%;
+    }
+    .column {
+      max-width: 450px;
+    }
+  </style>
+  <script>
+  $(document)
+    .ready(function() {
+      $('.ui.form')
+        .form({
+          fields: {
+            username: {
+              identifier  : 'username',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your id'
+                },
+              ]
+            },
+            email: {
+              identifier  : 'email',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your e-mail'
+                },
+                {
+                  type   : 'email',
+                  prompt : 'Please enter a valid e-mail'
+                }
+              ]
+            },
+            password1: {
+              identifier  : 'password1',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your password'
+                },
+                {
+                  type   : 'length[6]',
+                  prompt : 'Your password must be at least 6 characters'
+                }
+              ]
+            },
+
+            password2: {
+              identifier  : 'password2',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your password confirm'
+                },
+              ]
+            }
+
+          }
+        })
+      ;
+    })
+  ;
+  </script>
+<div class="ui middle aligned center aligned grid" style="margin-top: 60px;">
+  <div class="column">
+    <h1 class="ui teal header">
+      <div class="content">
+         Create your new account
+      </div>
+    </h1>
+    <form method="post" action="{% url 'account:sign_up' %}" class="ui large form" style="padding-top: 10px;">{% csrf_token %}
+      <div class="ui stacked segment">
+        {% for field in signup_form %}
+        <div class="field">
+          <div class="ui left icon input">
+          {% if forloop.first %}
+            <i class="user icon"></i>
+          {% elif forloop.counter == 2 %}
+            <i class="mail icon"></i>
+          {% else %}
+            <i class="lock icon"></i>             
+          {% endif %}
+              {{ field }}
+          </div>
+        </div>
+        {% endfor %}
+        <div class="ui fluid large teal submit button">Registration</div>
+      </div>
+      <div class="ui error message">
+      </div>
+      {% autoescape off %}
+      {% for message in messages %}
+      <div class="ui negative message">
+        {{ message }}
+      </div>
+      {% endfor %}
+      {% endautoescape %}
+    </form>
+</div>
+</div>
+
+</body>
+
+</html>
+
+
+
+
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="ui main container">
+    <div class="ui segments">
+      <div class="ui segment">
+        <i class="blue big trophy icon"></i> <b style="font-size: 1.2em;">HeXA CTF Rank</b>
+      </div>
+
+      <div class="ui segment">
+        <table class="ui very basic table">
+          <thead>
+          <tr>
+            <th class="two wide center aligned">#</th>
+            <th class="three wide center aligned">Name</th>
+            <th class="five wide center aligned">Point</th>
+            <th class="six wide center aligned">Last Auth</th>
+          </tr>
+          </thead>
+        
+          <tbody>
+            {% for rank in ranks %}
+            <tr>
+              {% if rank.user.username == current_user.user.username %}
+              <td class="active center aligned">{{rank.rank}}</td>
+              <td class="active center aligned">{{rank.user.username}}</td>
+              <td class="active center aligned">{{rank.score}}</td>
+              <td class="active center aligned">{{rank.last_auth|date:"Y-m-d H:i:s"}}</td>
+              {% else %}
+              <td class="center aligned">{{rank.rank}}</td>
+              <td class="center aligned">{{rank.user.username}}</td>
+              <td class="center aligned">{{rank.score}}</td>
+              <td class="center aligned">{{rank.last_auth|date:"Y-m-d H:i:s"}}</td>
+              {% endif %}
+            </tr>
+            {% endfor %} 
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

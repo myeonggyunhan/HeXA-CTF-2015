@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+  <script>
+  $(document)
+    .ready(function() {
+      $('select.dropdown')
+          .dropdown()
+      ;
+    })
+  ;
+  </script>
+
+<div class="ui main container">
+    <div class="ui segments">
+      <div class="ui segment">
+        <i class="blue big edit icon"></i> <b style="font-size: 1.2em;">Edit Problem</b>
+      </div>
+
+      <div class="ui segment">
+        <form class="ui form" action="/dashboard/edit_problem/{{prob_entry.id}}/" enctype="multipart/form-data" method="post">{% csrf_token %}
+          <div class="field">
+            <label>Problem title</label>
+            <input type="text" id="title" name="title" value="{{prob_entry.title}}">
+          </div>
+
+          <div class="field">
+            <label>Problem settings</label>
+            <div class="fields">
+              <div class="ten wide field">
+                <input type="text" id="answer" name="answer" placeholder="문제의 원래 정답은 md5 형태로 저장되어 볼 수 없습니다. 입력하지 않으면 원래 정답으로 적용됩니다.">
+              </div>
+              <div class="six wide field">
+                <input type="text" id="point" name="point" value="{{prob_entry.point}}">
+              </div>
+            </div>
+            <select id="category" name="category" class="ui dropdown">
+               <option value="">Select Category</option>
+               {% for category in categories %}
+               {% if category.title == prob_entry.category.title %}
+               <option value="{{category.title}}" selected>{{category.title}}</option>
+               {% else %}
+               <option value="{{category.title}}">{{category.title}}</option>
+               {% endif %}
+               {% endfor %}
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Problem description</label>
+            <textarea id="description" name="description">{{prob_entry.description}}</textarea>
+          </div>
+          <label for="problem_file"><small>파일을 변경하려면 새로운 파일을 업로드 해주세요.</small></label><br>
+          <input type="file" id="problem_file" name="problem_file">
+          <button class="ui right floated blue button" type="submit">Submit</button>
+          <br><br>
+        </form>
+      </div>
+
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<head>
+    <title>MangoBeat!</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <!--<link rel="stylesheet" href="http://hexa.play.com/You_may_find_flag.txt">-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet/style.css') }}" />
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/utf8.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/play.js') }}"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    
+    <script type="text/javascript">
+      google.load("swfobject", "2.1");
+    </script>  
+    
+    <div id="topheader">
+        <h1>Welcome to MangoBeat</h1>
+        <h5>-This website is made by FLASK-</h5>
+    </div>
+
+<div class="pure-g">
+    <div class="pure-u-3-5">
+        <p>Player</p>
+        <table>
+            <tr>
+            <td valign="top">
+                <div id="videoDiv">Loading...</div>
+              <div id="videoInfo">
+                <p>Player state: <span id="playerState">--</span></p>
+                <p>Current Time: <span id="videoCurrentTime">--:--</span> | Duration: <span id="videoDuration">--:--</span></p>
+                <p>Bytes Total: <span id="bytesTotal">--</span> | Start Bytes: <span id="startBytes">--</span> | Bytes Loaded: <span id="bytesLoaded">--</span></p>
+                
+                <p>Controls: <a href="javascript:void(0);" onclick="playVideo();">Play</a> | <a href="javascript:void(0);" onclick="pauseVideo();">Pause</a> | <a href="javascript:void(0);" onclick="muteVideo();">Mute</a> | <a href="javascript:void(0);" onclick="unMuteVideo();">Unmute</a></p>
+                <p><input id="volumeSetting" type="text" size="3" />&nbsp;<a href="javascript:void(0)" onclick="setVideoVolume();">&lt;- Set Volume</a> | Volume: <span id="volume">--</span></p>
+              </div>
+            </td></tr>
+        </table>
+
+    </div>
+    <div class="pure-u-2-5" id="playerList"><p>List</p>
+
+    </div>
+    <div class="pure-u-1-1">
+        <form class="pure-form">
+                <legend>Search Music!</legend>
+
+                <input type="text" id="musicName" placeholder="Choose your music!" onkeypress="if(event.keyCode==13) {findData(); return false;}">
+
+                <button type="button" class="pure-button pure-button-primary" onclick="findData();">Search</button>
+
+    </form>
+    </div>
+    <div class="pure-u-1-2" id="searchList"><p>Youtube</p>
+        
+    </div>
+    <div class="pure-u-1-2"><p>SoundCloud</p></div>
+</div>
+
+
+
+
+    
+
+</body>
+</html>

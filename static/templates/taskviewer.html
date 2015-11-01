@@ -1,0 +1,21 @@
+<div class="ui huge header">
+  {{ prob_entry.title }}
+  <div class="sub header">(solver: {{prob_entry.solver_count}})</div>
+</div>
+<br>
+{% autoescape off %}
+{{ prob_entry.description|linebreaksbr }}
+{% endautoescape %} 
+{% if prob_entry.problem_file %}
+<br><br>
+<a href="/gameboard/download/{{prob_entry.id}}">Download Attachment</a>
+{% endif %}
+<br><br>
+<form method="post" action="/gameboard/auth/{{prob_entry.id}}/"  class="ui form">{% csrf_token %}
+    <div class="six field">
+      <div class="ui action input">
+        <input type="text" id="answer" name="answer">
+        <button class="ui blue right submit button" type="submit">Auth</button>
+      </div>
+    </div>
+</form>

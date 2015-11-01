@@ -1,0 +1,59 @@
+
+#topheader {
+    font-family: "Raleway";
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+#playerList {
+}
+
+.music_list{
+    margin: 10px;
+    height: 20px;
+    border: 1px solid black;
+    padding: 5px;
+}
+.music_list_save{
+    margin: 10px;
+    height: 20px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.musicNameBox{
+    width: 80%;
+    float: left;
+}
+
+.musicName{
+    margin: 0px;
+    width: 100%;
+    font-size: 15px;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    white-space:nowrap;
+    word-wrap:normal;
+}
+
+.musicAddBox{
+    width: 18%;
+    float: left;
+}
+
+.musicAdd{
+    margin: 0px;
+    max-width: 50px;
+    text-align: center;
+}
+
+.musicDelBox{
+    width: 18%;
+    float: left;
+}
+
+.musicDelAdd{
+    margin: 0px;
+    max-width: 50px;
+    text-align: center;
+}

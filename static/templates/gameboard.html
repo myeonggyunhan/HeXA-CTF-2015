@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<script>
+function getquestion(qname)
+{
+        $('html, body').animate({
+                scrollTop: $("#top").offset().top
+        }, 500);
+        $.get( "/gameboard/prob_view/"+qname+"/", function( data ) {
+                $("#problem_text").hide().html( data ).fadeIn("slow");
+        });
+}
+</script>
+<div class="ui main container">
+
+{% if messages %}
+  {% for message in messages %}
+  {% if 'success'  in message.tags %}
+  <div class="ui {{ message.tags }} message">
+    <a href="/gameboard/" style="float: right"><i class="close link green icon"></i></a>
+      {{ message }}
+    </div>
+  {% else %}
+  <div class="ui {{ message.tags }} message">
+    <a href="/gameboard/" style="float: right"><i class="close link red icon"></i></a>
+      {{ message }}
+    </div>
+  {% endif %}
+  {% endfor %}
+{% endif %}
+
+    <div class="ui segments">
+      <div class="ui segment">
+        <br>
+        <div class="ui centered grid">
+          <div class="sixteen wide mobile ten wide computer column">
+            <div id="problem_text" class="ui secondary raised center aligned very padded segment">
+              {% include "taskviewer_empty.html" %}
+            </div>
+          </div>
+        </div>
+
+        <br>
+      </div>
+
+      <div class="ui segment">
+
+        {% for category, entries in problem_entry_dict.items %}      
+        <h4 class="ui top attached header">
+          {{category}} problems
+        </h4>
+        <div class="ui attached segment">
+          <div class="ui relaxed stackable grid container">
+            {% for entry in entries %}
+            <div class="four wide column">
+              {% if entry.id in solved_problem_list %}
+                <button class="ui animated fade {{entry.category.color}} massive fluid button" style="opacity: 0.45 !important" onclick="getquestion('{{ entry.id }}');">
+                  <div class="visible content">{{category}}<br>{{entry.point}}</div>
+                  <div class="hidden content">Solved</div>
+                </button>
+              {% else %}
+                 <button class="ui {{entry.category.color}} massive fluid button" onclick="getquestion('{{ entry.id }}');">{{category}}<br>{{entry.point}}</button>
+              {% endif%}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+        <br>
+      </div>
+
+    </div>
+<br><br>
+</div>
+
+
+{% endblock %}
