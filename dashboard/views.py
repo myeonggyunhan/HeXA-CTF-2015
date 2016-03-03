@@ -107,10 +107,10 @@ def add_notice(request):
 		return HttpResponseRedirect("/")
 
 
-	new_entry = NoticeEntries(title=entry_title, description=entry_content)
+	new_notice = NoticeEntries(title=entry_title, description=entry_content)
 
         try:
-                new_entry.save()
+                new_notice.save()
         except:
                 messages.error(request, "공지사항 등록에 실패하였습니다.")
                 return HttpResponseRedirect("/")
