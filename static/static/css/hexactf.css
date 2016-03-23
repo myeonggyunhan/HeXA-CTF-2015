@@ -24,6 +24,9 @@
       font-size: 1.7em;
       font-weight: normal;
     }
+	.ui.massiv {
+		word-wrap: break-word;
+	}
     .ui.vertical.stripe {
       padding: 8em 0em;
     }
